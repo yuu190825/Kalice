@@ -50,7 +50,8 @@
                 android:text="@string/buttonBsText"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -60,17 +61,70 @@
             android:layout_weight="1"
             android:weightSum="2">
 
-            <SeekBar
-                android:id="@+id/seekBarOfOutOrUp"
+            <LinearLayout
+                android:id="@+id/linearLayout21"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="2">
 
-            <SeekBar
-                android:id="@+id/seekBarOfDot"
+                <SeekBar
+                    android:id="@+id/seekBarOfOutOrUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="2"
+                    android:progress="1"
+                    android:progressTint="#000000"
+                    android:thumbTint="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/textViewOfOutOrUp"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout22"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <SeekBar
+                    android:id="@+id/seekBarOfDot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="3"
+                    android:progress="0"
+                    android:progressTint="#000000"
+                    android:thumbTint="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/textViewOfDot"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </TableRow>
 
         <TableRow

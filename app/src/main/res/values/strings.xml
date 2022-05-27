@@ -25,4 +25,7 @@
     <string name="buttonDotText">.</string>
     <string name="buttonEqualText">=</string>
     <string name="buttonAddText">+</string>
+    <string name="stringOut">Out</string>
+    <string name="string4Out5Up">4/5</string>
+    <string name="stringUp">Up</string>
 </resources>
