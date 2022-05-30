@@ -51,7 +51,10 @@ fun execution(i: String): String {
                 "add" -> a += b
                 "sub" -> a -= b
                 "mul" -> a *= b
-                "div" -> a /= b
+                "div" -> {
+                    a *= BigDecimal("1.0")
+                    a /= b
+                }
                 "pow" -> a = a.pow(b.toInt())
             }
             b = BigDecimal("0")
