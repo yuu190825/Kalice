@@ -2,6 +2,7 @@ package com.example.kalice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
@@ -76,8 +77,6 @@ fun execution(i: String): String {
         }
         if (finish) {
             step = if (a.toString().length <= 13) "a" else "e"
-        } else {
-            output = "null"
         }
     }
     if (step == "a") output = "$a "
@@ -167,9 +166,15 @@ class MainActivity : AppCompatActivity() {
                 } else if (dotMode && (dotCount == 1)) {
                     dotMode = false
                 } else if (!dotMode) {
-                    if (!operandChange) a /= BigDecimal("10") else b /= BigDecimal("10")
+                    if (!operandChange) {
+                        a *= BigDecimal("1.0")
+                        a /= BigDecimal("10")
+                    } else {
+                        b *= BigDecimal("1.0")
+                        b /= BigDecimal("10")
+                    }
                 }
-                if (!operandChange) a = a.setScale((dotControl - 1), RoundingMode.DOWN) else b = b.setScale((dotControl - 1), RoundingMode.DOWN)
+                if (!operandChange) a = a.setScale((dotCount - 1), RoundingMode.DOWN) else b = b.setScale((dotCount - 1), RoundingMode.DOWN)
                 screen.text = show()
             }
         }
@@ -207,14 +212,14 @@ class MainActivity : AppCompatActivity() {
                     execution("f")
                     screen.text = show()
                 } catch (e: java.lang.Exception) {
-                    execution("e")
+                    screen.text = execution("e")
                 }
             }
         }
 
         buttonDot.setOnClickListener {
             if (!error) {
-                if ((!operandChange && (a.toString().length < 12)) or (operandChange && (b.toString().length <12))) {
+                if ((!operandChange && (a.toString().length < 12)) || (operandChange && (b.toString().length < 12))) {
                     reset()
                     dotMode = true
                     screen.text = show()
@@ -225,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         buttonEqual.setOnClickListener {
             if (!error) {
                 finish = true
-                execution("c")
+                screen.text = execution("c")
             }
         }
 
@@ -255,6 +260,69 @@ class MainActivity : AppCompatActivity() {
             if (!error) {
                 m += if (!operandChange) a else b
             }
+        }
+    }
+
+    fun buttonNumberClick(view: View) {
+        // Weight
+        val screen: TextView = findViewById(R.id.textViewOfScreen)
+
+        if (!error) {
+            val input = when (view.id) {
+                R.id.buttonOf1 -> BigDecimal("1")
+                R.id.buttonOf2 -> BigDecimal("2")
+                R.id.buttonOf3 -> BigDecimal("3")
+                R.id.buttonOf4 -> BigDecimal("4")
+                R.id.buttonOf5 -> BigDecimal("5")
+                R.id.buttonOf6 -> BigDecimal("6")
+                R.id.buttonOf7 -> BigDecimal("7")
+                R.id.buttonOf8 -> BigDecimal("8")
+                R.id.buttonOf9 -> BigDecimal("9")
+                else -> BigDecimal("0")
+            }
+            reset()
+            if (!dotMode && !operandChange && (a.toString().length < 13)) {
+                a *= BigDecimal("10")
+                a += input
+            } else if (!dotMode && operandChange && (b.toString().length < 13)) {
+                b *= BigDecimal("10")
+                b += input
+            } else if (dotMode && !operandChange && (a.toString().length < 13)) {
+                a += (input * dot)
+                dot *= BigDecimal("0.1")
+                dotCount += 1
+            } else if (dotMode && operandChange && (b.toString().length < 13)) {
+                b += (input * dot)
+                dot *= BigDecimal("0.1")
+                dotCount += 1
+            }
+            screen.text = show()
+        }
+    }
+
+    fun buttonOperatorClick(view: View) {
+        // Weight
+        val screen: TextView = findViewById(R.id.textViewOfScreen)
+
+        if (!error) {
+            val input = when (view.id) {
+                R.id.buttonOfAdd -> "add"
+                R.id.buttonOfSub -> "sub"
+                R.id.buttonOfMul -> "mul"
+                R.id.buttonOfDiv -> "div"
+                R.id.buttonOfPow -> "pow"
+                else -> "null"
+            }
+            finish = false
+            if (!operandChange) {
+                setAB = false
+                mySetValue = false
+                operandChange = true
+                dotMode = false
+                dot = BigDecimal("0.1")
+                dotCount = 1
+            } else if (operandChange && setAB) screen.text = execution("c")
+            if (!error) operator = input
         }
     }
 }
