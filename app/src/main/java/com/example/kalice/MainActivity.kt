@@ -51,10 +51,7 @@ fun execution(i: String): String {
                 "add" -> a += b
                 "sub" -> a -= b
                 "mul" -> a *= b
-                "div" -> {
-                    a *= BigDecimal("1.0")
-                    a /= b
-                }
+                "div" -> a = a.divide(b, 4, RoundingMode.HALF_UP)
                 "pow" -> a = a.pow(b.toInt())
             }
             b = BigDecimal("0")
@@ -164,17 +161,15 @@ class MainActivity : AppCompatActivity() {
         buttonBackSpace.setOnClickListener {
             if (!error) {
                 if (dotMode && (dotCount > 1)) {
-                    dot /= BigDecimal("0.1")
+                    dot = dot.divide(BigDecimal("0.1"))
                     dotCount -= 1
                 } else if (dotMode && (dotCount == 1)) {
                     dotMode = false
                 } else if (!dotMode) {
                     if (!operandChange) {
-                        a *= BigDecimal("1.0")
-                        a /= BigDecimal("10")
+                        a = a.divide(BigDecimal("10"))
                     } else {
-                        b *= BigDecimal("1.0")
-                        b /= BigDecimal("10")
+                        b = b.divide(BigDecimal("10"))
                     }
                 }
                 if (!operandChange) a = a.setScale((dotCount - 1), RoundingMode.DOWN) else b = b.setScale((dotCount - 1), RoundingMode.DOWN)
