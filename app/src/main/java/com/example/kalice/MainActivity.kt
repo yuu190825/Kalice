@@ -29,7 +29,7 @@ var dotCount = 1
 // Function
 fun show(): String {
     var output = ""
-    if ((!dotMode || (dotMode && (dot < BigDecimal("0.1"))))) {
+    if (!dotMode || (dotMode && (dot < BigDecimal("0.1")))) {
         output = if (!operandChange) "$a " else "$b "
     } else if (dotMode && (dot == BigDecimal("0.1"))) {
         output = if (!operandChange) "$a. " else "$b. "
@@ -79,11 +79,11 @@ fun execution(i: String): String {
             step = if (a.toString().length <= 13) "a" else "e"
         }
     }
-    if (step == "a") output = "$a "
-    if (step == "e") {
+    if ((i == "e") || (step == "e")) {
         error = true
         output = "E "
     }
+    if (step == "a") output = "$a "
     return output
 }
 
