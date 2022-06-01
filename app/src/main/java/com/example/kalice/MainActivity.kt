@@ -10,6 +10,8 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.math.sqrt
 
+// Ready to 2.0
+
 // Variable
 var setAB = false
 var mySetValue = false
@@ -63,6 +65,7 @@ fun execution(i: String): String {
                 step = "f"
             }
         } catch (e: java.lang.Exception) {
+            // a/0 error
             step = "e"
         }
     }
@@ -210,6 +213,7 @@ class MainActivity : AppCompatActivity() {
                     execution("f")
                     screen.text = show()
                 } catch (e: java.lang.Exception) {
+                    // sqrt(a) or sqrt(b) error
                     screen.text = execution("e")
                 }
             }
