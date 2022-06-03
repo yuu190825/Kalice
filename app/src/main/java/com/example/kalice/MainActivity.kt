@@ -197,7 +197,11 @@ class MainActivity : AppCompatActivity() {
 
         buttonPosOrNeg.setOnClickListener {
             if (!error) {
-                if (!operandChange) a *= BigDecimal("-1") else b *= BigDecimal("-1")
+                if (!operandChange) {
+                    if (a.toInt() != 0) a *= BigDecimal("-1")
+                } else {
+                    if (b.toInt() != 0) b *= BigDecimal("-1")
+                }
                 screen.text = show()
             }
         }
