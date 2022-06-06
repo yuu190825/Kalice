@@ -48,24 +48,29 @@ fun execution(i: String): String {
         dotMode = false
         dot = BigDecimal("0.1")
         dotCount = 1
-        try {
-            when (operator) {
-                "add" -> a += b
-                "sub" -> a -= b
-                "mul" -> a *= b
-                "div" -> a = a.divide(b, 4, RoundingMode.HALF_UP)
-                "pow" -> a = a.pow(b.toInt())
+        if (((a > BigDecimal("0")) || (a < BigDecimal("0"))) || (operator != "pow") || (b > BigDecimal("0"))) {
+            try {
+                when (operator) {
+                    "add" -> a += b
+                    "sub" -> a -= b
+                    "mul" -> a *= b
+                    "div" -> a = a.divide(b, 4, RoundingMode.HALF_UP)
+                    "pow" -> a = a.pow(b.toInt())
+                }
+                b = BigDecimal("0")
+                if (!finish) {
+                    step = if (a.toString().length <= 13) "a" else "e"
+                } else {
+                    operandChange = false
+                    operator = "null"
+                    step = "f"
+                }
+            } catch (e: java.lang.Exception) {
+                // a/0 error
+                step = "e"
             }
-            b = BigDecimal("0")
-            if (!finish) {
-                step = if (a.toString().length <= 13) "a" else "e"
-            } else {
-                operandChange = false
-                operator = "null"
-                step = "f"
-            }
-        } catch (e: java.lang.Exception) {
-            // a/0 error
+        } else {
+            // 0 pow (0, -b) error
             step = "e"
         }
     }
@@ -198,9 +203,9 @@ class MainActivity : AppCompatActivity() {
         buttonPosOrNeg.setOnClickListener {
             if (!error) {
                 if (!operandChange) {
-                    if (a > BigDecimal("0") || a < BigDecimal("0")) a *= BigDecimal("-1")
+                    if ((a > BigDecimal("0")) || (a < BigDecimal("0"))) a *= BigDecimal("-1")
                 } else {
-                    if (b > BigDecimal("0") || b < BigDecimal("0")) b *= BigDecimal("-1")
+                    if ((b > BigDecimal("0")) || (b < BigDecimal("0"))) b *= BigDecimal("-1")
                 }
                 screen.text = show()
             }
