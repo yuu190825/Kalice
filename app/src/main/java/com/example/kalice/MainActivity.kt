@@ -10,8 +10,6 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.math.sqrt
 
-// Ready to 2.0
-
 // Variable
 var setAB = false
 var mySetValue = false
